@@ -218,81 +218,39 @@ Fails loudly on empty or unrelated folders. Markdown and plain-text only.
 
 ## CRITIQUE
 
-Paste a draft. Get a scored rubric, a section breakdown, the top 3 rewrites (current → suggested), a one-paragraph verdict.
+Paste a draft. Get a scored rubric, the rewrite CRITIQUE would emit, and a verdict on whether to ship. Two hard caps don't bend: voice mismatch caps at 5/10, missing a quantified ask caps at 7/10.
 
-The top-3 rewrites are where the skill earns its rent. Each one quotes a specific sentence from the draft, shows what it's failing at, and rewrites it. If your draft asserts "the market is huge and growing," CRITIQUE will replace it with a specific stat, a named competitor, and a dated trend-line — or flag that you don't have the evidence to make the claim and should stop.
+The cleanest way to show what CRITIQUE does is a before/after.
 
-```
-## /six-pager Critique
+**Before — a typical founder-voice team update (155 words):**
 
-**Score: 4/10**
-**Status: FAIL**
+> Hey team,
+>
+> Wanted to give a quick update on where things are with the Q2 launch, since a few moving pieces came up this week and I don't want anyone surprised.
+>
+> Overall we've been making solid progress across the workstreams, but the compliance side has developed in a way that's going to need a decision from us soon. Our current vendor is raising some concerns that we may not be able to fully resolve on the timeline we'd hoped, and we've also been looking at alternatives that have come up in conversations. Both paths have trade-offs worth working through.
+>
+> I want to flag this early so we can start thinking about implications for the launch and any downstream effects on the roadmap. There's also some engineering bandwidth questions depending on which way we go.
+>
+> Happy to jump on a call later this week. Let me know when works.
 
-### Structure (1/3)
-- Background: present but labeled "Context"
-- Opportunity: missing (market is asserted, never sized)
-- [Proposer] Advantages: missing (proposer never named)
-- Conclusion ask: vague ("explore this further")
+**CRITIQUE's score: 2/10. Voice-mismatch cap engaged.** First-person register, zero grounded claims, no dates, no named vendors, no specific ask. "Solid progress across the workstreams," "some concerns," "moving pieces," "trade-offs worth working through" — hedging language doing the work that specifics should.
 
-### Voice (0/3)
-- Register: first-person founder
-- AI slop found: "unlock", "game-changing", "delve into",
-  "we're excited to"
-- Grounding: 0 stats, 0 named companies, 0 dated trend-lines
-- Voice mismatch → hard cap at 5 engaged
+**After — the rewrite CRITIQUE emits:**
 
-### Top 3 rewrites
+> **TLDR.** Q2 pilot launches May 4, not April 20, unless we switch consent vendors by Wednesday. Missing May 4 means missing the partner demo at the May board.
+>
+> **The choice.** Stay with the current vendor (another ~2 weeks of compliance review, no eng work now) or migrate to the alternative (5 engineering days now, unblocks May 4, cleaner DPA posture going forward).
+>
+> **What migration costs.** Sarah and two others come off the onboarding rewrite, which pushes that work into June. Onboarding is on Retention's Q2 roadmap. The PM there will push back, and she's right to.
+>
+> **My read.** Migrate anyway. The board demo and the cleaner compliance posture are worth the onboarding slip. I'll own the Retention conversation.
+>
+> **Ask.** Yes or no by EOD Wednesday.
 
-1. Opportunity — add sizing, named incumbents, dated trend.
-   Current: "The predictive-maintenance market for heavy
-   equipment is large and growing fast. Lots of fleet
-   operators want to reduce downtime, and the technology
-   has gotten much better recently."
-   Suggested: "North American Tier-4+ construction and
-   mining fleets operate >180,000 machines (AEM, 2024),
-   with unscheduled downtime costing operators an average
-   of $1,600/day per machine (McKinsey, 2024). Incumbent
-   fleet-telematics systems (Komtrax, JDLink) have proven
-   attach at 55–60% on their respective installed bases
-   for basic visibility — but neither predicts component
-   failure at the telematics layer. The gap is the
-   predictive-service category this memo argues the
-   company is uniquely positioned to own."
+Same author, same facts on the ground. The difference is specificity — dates, names, costs — a visible ask with a deadline, and a reader who can decide without a follow-up meeting.
 
-2. Conclusion — replace the vague close with a specific ask.
-   Current: "We believe this is a massive opportunity and
-   we should move quickly to explore it further."
-   Suggested: "Fund a 21-month cross-functional sprint:
-   $6.2M, 14 FTEs across engineering, data science,
-   dealer operations, and services, to deliver a 500-fleet
-   paid pilot by Q3 2027. Scale-funding gate at Q2 2028
-   contingent on ≥30% attach and $450/machine/year ARR
-   across pilot cohorts."
-
-3. Voice — rewrite the opener in third-person institutional.
-   Current: "We're really excited about this opportunity
-   and believe it could be a game-changer for our services
-   business. This is a chance to leverage our scale to
-   unlock a huge new revenue stream."
-   Suggested: "Heavy-equipment services revenue is the
-   company's fastest-growing segment (11% YoY, 2023) and
-   the category most exposed to third-party, OEM-agnostic
-   aggregators. Samsara has scaled past 2M connected
-   machines by 2024 ($1.1B ARR, 35% YoY). Absent a
-   defensible OEM-native predictive service, the
-   services-revenue margin migrates to the aggregation
-   layer over the next 24–36 months."
-
-### Verdict
-The draft is a founder update, not an exec memo. The
-structural failure (no sizing, no proposer, no ask) is
-recoverable in a rewrite. The voice failure requires a
-wholesale reset — first-person enthusiasm to third-person
-institutional. Fix the three rewrites above and re-score
-before circulating.
-```
-
-Rubric: Structure 3pts, Voice 3pts, Rhetorical moves 2pts, Density 2pts. Caps: voice mismatch at 5, missing quantified ask at 7.
+Rubric: Structure 3pts, Voice 3pts, Rhetorical moves 2pts, Density 2pts.
 
 ## The 9 sections
 
