@@ -6,10 +6,13 @@ description: |
   is a C-suite / VP / board-level audience at a large institution (bank,
   regulator, enterprise partner, portfolio company) and the memo has to
   survive being forwarded without the author in the room.
-  Two modes:
-    DRAFT    — runs an intake quiz, then generates the memo.
+  Three modes:
+    DRAFT    — working-backwards-first by default (press release, then memo).
+               Falls back to an intake quiz if the user opts out of the PR.
+    CORPUS   — point the skill at a folder of markdown/text notes; it maps
+               them onto the 9 sections and emits a memo with source cites.
     CRITIQUE — scores an existing draft against a 10-point rubric.
-  Canonical reference sample lives at six-pager/reference-sample.md.
+  A library of public references lives at six-pager/references/.
 allowed-tools:
   - Read
   - Write
@@ -22,7 +25,7 @@ allowed-tools:
 
 # /six-pager
 
-Write or grade a strategic memo for an institutional-exec reader. The form is a ~6-page argument with 9 canonical sections, measured third-person voice, and an explicit ask at the end. The reference sample at `six-pager/reference-sample.md` is the quality bar — read it once before you trust the rules below.
+Write or grade a strategic memo for an institutional-exec reader. The form is a ~6-page argument with 9 canonical sections, measured third-person voice, and an explicit ask at the end. Before trusting the rules below, skim one or two files in `six-pager/references/` — that's the calibration material.
 
 ## 1. What this form is
 
@@ -30,20 +33,13 @@ A strategic memo, roughly six pages, for a reader who is an executive at a large
 
 The form's job is to make a case that survives being passed around. It is not a founder update, not a pitch deck, not an internal team doc. It is corporate-grade argumentation.
 
+**Why roughly six pages.** Calibrated to Amazon's silent-reading ritual — executives read the memo in the first 15–25 minutes of the meeting at ~3 min/page. Past 8 pages the ritual breaks; under 4, the case is under-made. See `references/porter-6-pager-notes.md`.
+
 ## 2. When to use
 
-**Use `/six-pager` for:**
-- Internal strategy memos for a bank, insurer, or regulated institution
-- Regulator-facing or policy-body strategy docs
-- Enterprise-partner strategy briefings (Fortune 500 exec teams)
-- Board briefings, investment-committee memos, and portfolio-company strategy docs
-- Any writing where the author will not be in the room and the doc has to carry the argument
+**Use for:** bank/insurer/regulated-institution strategy memos, regulator-facing policy docs, enterprise-partner strategy briefings, board briefings, investment-committee memos, portfolio-company strategy docs. Anything where the author won't be in the room and the doc has to carry the argument.
 
-**Don't use for:**
-- Founder updates, investor emails, or Slack messages → use a first-person voice skill instead
-- Marketing, landing copy, or press releases → use a marketing voice skill
-- Product specs or engineering design docs → use a spec skill
-- Internal team notes → use a notes / journal workflow
+**Don't use for:** founder updates or investor emails (use a first-person voice skill), marketing copy or public press releases (use a marketing skill — though the internal PR inside DRAFT's working-backwards flow is fine), product specs (use a spec skill), internal team notes (use a notes workflow).
 
 ## 3. Canonical structure (9 sections)
 
@@ -60,10 +56,11 @@ Every section is a *move* in an argument, not a topic label. Each section earns 
 | 7 | **Execution Plan** | 4 phases. Each phase has a duration in months, a clear milestone, and a success criterion. No vague "explore" or "learn." |
 | 8 | **Risks and Mitigations** | 1:1 pairs. Each risk paired with a specific, non-hand-waved mitigation. 4–6 risks total. |
 | 9 | **Conclusion** | Restate the bet in two paragraphs. End with the specific ask — dollar amount, headcount, timeline, or decision to be made. |
+| + | **Appendix** *(optional)* | Numbered endnotes matched to superscripted citations in the body. Supporting stats, source URLs, filings. About one per page is right. See `references/bishop-wilke-six-pager.md`. |
 
 ## 4. Voice rules
 
-This voice may be different from the default voice skill your org uses for founder comms. It is **third-person, institutional, measured, stat-grounded.**
+Third-person, institutional, measured, stat-grounded.
 
 **Patterns to use:**
 
@@ -76,14 +73,9 @@ This voice may be different from the default voice skill your org uses for found
 - **Parallel structure.** Verb-first lists, same grammatical shape, 3–4 items. Example form: "Preserve X. Seed Y. Differentiate on Z. Attract W."
 - **Objection inoculation in-line.** "X is not a new Y; it is Z." Head off the obvious pushback before the reader forms it.
 - **Defensive-AND-offensive framing.** Hold two stances at once — a hedge against one risk and a catalyst for one opportunity.
+- **Narrative coherence.** A question the memo invites on page 2 must be answered by page 4. Track where the reader's mind goes at each section break; rewrite dangling questions. See `references/porter-6-pager-notes.md`.
 
-**Patterns to avoid:**
-
-- Hype ("revolutionary", "game-changing", "unprecedented"). The form never hypes.
-- "AI-powered" as a selling point. Mention AI as a capability, not as brand.
-- Emoji, exclamation points, first-person emotions.
-- Long winding sentences. Two to three sentences per paragraph, average ~20 words.
-- Generic AI slop phrases ("in today's landscape", "delve into", "leverage", "harness", "unlock").
+**Patterns to avoid:** hype ("revolutionary", "game-changing", "unprecedented"), "AI-powered" as branding, emoji / exclamation points / first-person emotions, long winding sentences (2–3 sentences per paragraph, ~20 words average), AI slop phrases ("in today's landscape", "delve into", "leverage", "harness", "unlock").
 
 ## 5. Named rhetorical moves
 
@@ -96,53 +88,101 @@ Use this as a menu. Deploy at least three in any 6-pager.
 5. **Defensive-AND-offensive framing** — refuse the either/or, hold both framings simultaneously ("both a hedge and a catalyst").
 6. **Term-of-art coinage** — italicize a new concept, define it inline, use it as scaffolding for the rest of the memo.
 7. **The Why Now question** — italicized framing question that reframes the initiative. Example shape: *"What new kinds of experiences become possible now that could not have existed before?"*
-8. **Future-dated endpoint** — optional companion artifact (a press release, a screenshot, a milestone doc) dated 18–24 months out, making the success state tangible. See `reference-press-release.md`.
+8. **Future-dated endpoint** — a press release dated 12–24 months out that makes the success state tangible. This is Amazon's Working Backwards move. In `/six-pager`, it drives the default DRAFT flow.
+
+Every reference file in `six-pager/references/` notes which of these moves it exemplifies.
 
 ## 6. Mode selection
 
-On invocation, pick a mode from what the user supplied:
-
-- **User pastes a draft, gives a file path, or links a doc** → CRITIQUE
-- **User gives a topic, bullets, notes, or goal** → DRAFT
-- **User asks "what is this skill"** → show this doc, offer both modes
-- **Ambiguous** → ask: "Draft a new 6-pager, or critique an existing draft?"
+| User provides | Mode |
+|---|---|
+| Pasted draft / file path to an existing memo | CRITIQUE |
+| Folder path, or explicit list of markdown/text files, as raw material | CORPUS |
+| Topic, bullets, goal, or nothing | DRAFT (working-backwards default) |
+| "Skip the press release" or user already has a PR drafted | DRAFT (quiz-only fallback) |
+| Ambiguous | Ask which mode |
 
 ---
 
 ## 7. DRAFT mode
 
-### 7.1 Intake quiz (run before drafting)
+DRAFT has two sub-flows. Default is working-backwards; the quiz-only fallback is preserved for users who don't want to draft a press release first.
 
-Do not start writing until you have enough material to fill all 9 sections. Walk the user through the questions below, in this order. Adapt wording to the context; skip questions the user already answered in their opening prompt; batch any that have clean discrete options into a single `AskUserQuestion` call.
+### 7.1 Working-backwards flow (default)
 
-1. **The proposal — in one paragraph.** What is the initiative, and what's the core bet? (Open-ended text.)
-2. **The reader.** Which institution will read this? At what level — C-suite, VP, Director, Board? (Multi-choice OK for level; open-ended for institution.)
-3. **The proposer.** Whose memo is this — which company or institution is proposing? What are its 3–5 structural advantages that give it a credible right to win (compliance, infrastructure, data, brand, distribution, talent, existing relationships)?
-4. **Why now.** What capability shift makes this newly possible that wasn't two to three years ago? (Technology breakthrough, regulatory change, behavioral shift, market timing.)
-5. **The threat.** What does the proposer lose if they don't act? What's the disintermediation or relevance-loss story?
-6. **The ask.** What is the conclusion asking for? Specific: dollar amount, headcount, a sprint window, a decision, an approval. "Explore further" is not an ask.
-7. **Raw material.** Paste any stats, named incumbents, data points, constraints, timeline, or prior art the draft should incorporate.
-8. **Length target.** Default ~2,000 words / 6 pages. Offer: 4-page (~1,400 w), 6-page (~2,000 w), 8-page (~2,800 w).
+The logic: the press release locks the end state, and the 6-pager argues for getting there. The PR anchors Product Concept (what users actually get), Execution Plan milestones (phases that end with PR true), and the Conclusion ask (what funds the PR date). The other six sections come from intake + any corpus material.
 
-After the user answers, echo back a short summary of what you've gathered, flag any gaps, and **wait for green light before drafting**. If any section is thin — typically #3 (advantages), #5 (threat), or #6 (ask) — ask one targeted follow-up per gap.
+**Step 1 — Four-question intake.** Ask these in a single `AskUserQuestion` batch where options exist; open-ended otherwise.
 
-### 7.2 Drafting procedure
+1. **Initiative.** In one paragraph, what's the bet?
+2. **Reader.** Which institution will receive this, at what level (C-suite, VP, Director, Board)?
+3. **Win metric.** At launch, what single metric demonstrates the bet worked? (e.g., "5,000 families in pilot", "$25M in committed deposits", "approval from regulator X")
+4. **Ship horizon.** When does this go live? (12, 18, or 24 months out.)
 
-Once the intake is complete:
+**Step 2 — Draft the press release.** Under 400 words, dated on the ship horizon. Use McAllister's structure (see `references/mcallister-circulert-prfaq.md`): title (`[Company] announces [product] to enable [customer] to [benefit]`), subtitle, dateline, 3–4 sentence intro, top 3–4 ranked problems, solution, leader quote (why, not what), how-it-works walk-through, mundane customer quote, and a getting-started line.
 
-1. Read `reference-sample.md` to re-prime on the bar.
-2. Map the user's material onto the 9-section structure. Identify which sections are data-rich and which need more.
-3. Pick 3–5 rhetorical moves from section 5 to deploy explicitly in this draft.
-4. Draft the memo section by section. Each section is a *move*, not a description. Every claim gets a stat, a name, or a trend.
-5. Self-run the critique rubric in section 8 before returning. Fix anything scored below 7.
-6. Return the memo as markdown, followed by a short self-report:
-   - Which rhetorical moves you used (by name, from section 5)
-   - What the specific ask is
-   - Any input gaps the user should fill before sending
+**Step 3 — Show the PR to the user. Wait for green-light or edits before proceeding.** The PR is the locking artifact; if it's wrong, the memo will be wrong.
+
+**Step 4 — Reverse-engineer the 9-section memo from the approved PR.**
+
+- **Product Concept** is derived directly from the PR's product description. Split into the two user halves as required by the canonical structure.
+- **Execution Plan** is written backward from the PR date. Four phases, each ending with a milestone that must be true for the PR to be shippable on the dateline.
+- **Conclusion ask** is the funding / headcount / decision required to make the Execution Plan feasible.
+
+**Step 5 — Fill the remaining six sections.** Background, Opportunity, [Proposer] Advantages, Why Now, Strategic Imperative, Risks and Mitigations. Source from the intake answers and any corpus files the user has provided. If a section is thin, ask one targeted follow-up question — don't hallucinate.
+
+**Step 6 — Self-critique.** Run the rubric in §9 silently; fix anything scoring below 7 before returning.
+
+**Step 7 — Return the memo + the press release as a companion artifact.** Follow with a short self-report: which of the eight rhetorical moves you used, what the specific ask is, and what gaps the user should fill before sending.
+
+### 7.2 Quiz-only flow (fallback)
+
+Triggered when the user says "skip the press release", "I already have one", or asks for the quiz. Eight questions: proposal (one paragraph), reader (institution + level), proposer (company + 3–5 structural advantages), why now (capability shift), threat (what's lost by not acting), ask (dollar / headcount / sprint / decision), raw material (stats, incumbents, constraints, prior art), length target (default ~2,000 w / 6 pages; offer 4-/6-/8-page). Echo back a summary, flag gaps, wait for green light, draft section by section.
+
+### 7.3 Drafting procedure (shared across sub-flows)
+
+Read 1–2 reference files first (default: `bishop-wilke-six-pager.md` for form, `bezos-1997-letter.md` for voice). Pick 3–5 rhetorical moves from §5 to deploy. Draft section by section — each section a *move*, each claim grounded in a stat, a name, or a trend. Self-run the §9 rubric; fix anything below 7. Return memo + self-report (moves used, specific ask, gaps).
 
 ---
 
-## 8. CRITIQUE mode
+## 8. CORPUS mode
+
+When the user has already done the thinking — notes, brainstorms, scattered docs — and wants the memo assembled from that material rather than generated from a quiz.
+
+### 8.1 Inputs
+
+A folder path or an explicit list of file paths. Only `.md` and `.txt` files are read. No Notion, Confluence, Drive, or other integrations. Skipped file types are noted in the output.
+
+### 8.2 Extraction procedure
+
+1. **Walk the corpus** — read every markdown/text file.
+2. **Classify passages by section.** A single passage can feed more than one of the 9 sections.
+3. **Check coverage.** The two highest-risk gaps: specific ask (Conclusion) and named reader / target institution.
+4. **Top-up intake** — only if coverage has gaps. Don't re-ask questions the corpus already answers. Usually just reader + ask.
+5. **Draft the memo.** Attribute load-bearing claims to their source file.
+6. **Emit the Sources trailer** (§8.3).
+
+### 8.3 Sources trailer format
+
+```
+## Sources used
+
+| Section | Source file(s) |
+|---|---|
+| Background | notes/market-context.md, research/2025-q4-trends.md |
+| Opportunity | notes/market-context.md, sizing/tam-analysis.md |
+| ... | ... |
+```
+
+### 8.4 Fail-loudly rules
+
+- **Empty corpus.** If the folder has no readable markdown/text files, stop. Report what was found and ask for a different path.
+- **Unrelated corpus.** If the corpus is clearly about a different topic than the user's stated goal, stop. Report the mismatch. Do not try to force a connection.
+- **No hallucinating.** If a section has zero corpus support and the user declined to answer top-up questions, mark the section `[corpus did not cover — needs author input]` and return the partial memo. Do not invent stats, names, or trends to fill gaps.
+
+---
+
+## 9. CRITIQUE mode
 
 ### Input
 
@@ -165,7 +205,7 @@ Read the draft. Score against the rubric below. Flag every gap. Suggest rewrites
 - No hype, no "AI-powered" as brand, no generic AI slop? (1 pt)
 
 **Rhetorical moves (0–2 points)**
-- At least 3 named moves from section 5 used? (1 pt)
+- At least 3 named moves from §5 used? (1 pt)
 - Objection inoculation or defensive-AND-offensive framing present? (1 pt)
 
 **Density (0–2 points)**
@@ -198,7 +238,7 @@ Read the draft. Score against the rubric below. Flag every gap. Suggest rewrites
 - AI slop: [list any found]
 
 ### Rhetorical moves (X/2)
-- Moves used: [list from section 5]
+- Moves used: [list from §5]
 - Missing obvious opportunity: [if applicable]
 
 ### Density (X/2)
@@ -223,7 +263,7 @@ Read the draft. Score against the rubric below. Flag every gap. Suggest rewrites
 
 ---
 
-## 9. Quick reference card
+## 10. Quick reference card
 
 ```
 FORM:       ~6-page strategic memo for an institutional exec reader
@@ -236,16 +276,15 @@ MOVES:      disintermediation setup · asset inventory ·
             defensive-AND-offensive · term-of-art coinage ·
             why-now question · future-dated endpoint
 END:        conclusion with a specific ask ($, headcount, date, decision)
-SAMPLE:     six-pager/reference-sample.md (the bar)
-COMPANION:  six-pager/reference-press-release.md (optional future-dated endpoint)
+MODES:      DRAFT (working-backwards default | quiz-only fallback) ·
+            CORPUS (folder → memo + sources trailer) ·
+            CRITIQUE (rubric + top-3 rewrites)
+REFS:       six-pager/references/ — Wilke-verified full 6-pager (Bishop),
+            insider craft notes (Porter), Bezos letters (1997/2016/2018),
+            PR/FAQ samples (McAllister, Bryar/Carr, Freeman, Chin).
+APPENDIX:   optional — numbered endnotes matched to body citations.
 ```
 
-## 10. Companion skills (optional)
+## 11. Companion skills (optional)
 
-If these skills are installed in your environment, use them as follow-ups to a DRAFT pass:
-
-- A generic voice linter — run after DRAFT to catch residual AI slop.
-- A humanizer skill — run if the output feels too AI-smooth.
-- A first-person founder voice — if critique reveals the draft is actually meant for a founder / investor audience, redirect there.
-
-These are optional. The `/six-pager` skill is self-contained and does not require any of them to function.
+Optional follow-ups if installed: a voice linter, a humanizer, or a first-person founder voice skill. `/six-pager` is self-contained.
